@@ -1,0 +1,8 @@
+{
+    "acoustid_api_key": "PRDC1WrVaQ",
+    "rename_pattern": "{artist} - {title}",
+    "save_tags": true,
+    "backup_original": false,
+    "recursive_scan": true,
+    "file_extensions": [".mp3"]
+}
