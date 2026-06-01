@@ -119,17 +119,19 @@ def read_id3_tags(mp3_path):
 def fingerprint_search(api_key, mp3_path):
     """通过音频指纹搜索元数据"""
     try:
-        matches, fingerprint, duration = acoustid.match(
+        # 获取原始 JSON 响应（不解析）
+        response = acoustid.match(
             api_key,
             str(mp3_path),
-            meta='recordings+releasegroups'
+            meta='recordings+releasegroups',
+            parse=False
         )
 
-        if not matches:
+        if response['status'] != 'ok' or not response.get('results'):
             return None
 
-        best_match = matches[0]
-        if 'recordings' not in best_match:
+        best_match = response['results'][0]
+        if 'recordings' not in best_match or not best_match['recordings']:
             return None
 
         recording = best_match['recordings'][0]
